@@ -59,6 +59,23 @@ public class CustomerController {
 		}
 		return response;
 	}
+	@GetMapping("delete/{customerId}")
+	public ResponseEntity<Object> deleteCustomerApi(@PathVariable("customerId") int id)
+	{
+		ResponseEntity<Object> response=null;
+		try {
+		   customerService.deleteCustomer(id);
+		   //response=ResponseEntity.status(200).body(customerService.deleteCustomer(id));
+			
+		}
+		catch(CustomerNotFoundException e) {
+			ResponseMessage error=new ResponseMessage();
+			error.setStatusCode(404);
+			error.setDescription(e.getMessage());
+			response=ResponseEntity.status(404).body(error);
+		}
+		return response;
+	}
 	
 	@PutMapping("{customerId}/{dob}")
 	public ResponseEntity<Object> updateCustomerAPI(@PathVariable("customerId") int id, @PathVariable("dob") String stringDob) {
@@ -74,4 +91,5 @@ public class CustomerController {
 		}
 		return response;
 	}
+	
 }

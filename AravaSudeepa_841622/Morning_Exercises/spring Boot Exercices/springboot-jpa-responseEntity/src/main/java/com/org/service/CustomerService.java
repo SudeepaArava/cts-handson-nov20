@@ -37,6 +37,15 @@ public class CustomerService {
 			throw new CustomerNotFoundException("Sorry customer with"
 					+ "an id "+id+" not found");
 	}
+	public void deleteCustomer(int id) throws CustomerNotFoundException
+	{
+		Optional<Customer> option = dao.findById(id);
+		if(option.isPresent())
+			dao.deleteById(id);
+		else
+			throw new CustomerNotFoundException("Sorry customer with id "+id+" not found");
+		//dao.deleteById(id);
+	}
 	public Customer updateCustomer(int id,LocalDate dob) throws CustomerNotFoundException
 	{
 		Customer customer = fetchCustomer(id);
